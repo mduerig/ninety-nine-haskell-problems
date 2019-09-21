@@ -1,6 +1,6 @@
 module Main where
 
-import Problems
+import Problems1
 
 main :: IO ()
-main = someFunc
+main = print "hi there!"
