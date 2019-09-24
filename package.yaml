@@ -38,7 +38,7 @@ executables:
 
 tests:
   ninetynine-hackell-problems-test:
-    main:                Spec.hs
+    main:                Tests.hs
     source-dirs:         test
     ghc-options:
     - -threaded
@@ -46,3 +46,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - ninetynine-hackell-problems
+    - QuickCheck

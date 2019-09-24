@@ -15,7 +15,7 @@ lastButOne (x:xs) = lastButOne xs
 -- Problem 3
 -- Find the K'th element of a list. The first element in the list is number 1.
 elementAt :: Int -> [a] -> a
-elementAt 0 (x:_) = x
+elementAt 1 (x:_) = x
 elementAt n (x:xs) = elementAt (n - 1) xs
 
 -- Problem 4
@@ -43,6 +43,7 @@ isPalindrome xs = xs == (reverseList xs)
 -- Transform a list, possibly holding lists as elements into a `flat' list by replacing each list
 -- with its elements (recursively).
 data NestedList a = Elem a | List [NestedList a]
+    deriving Show
 
 flattenList :: NestedList a -> [a]
 flattenList (Elem x) = [x]
@@ -56,7 +57,7 @@ dedupList :: Eq a => [a] -> [a]
 dedupList [] = []
 dedupList [x] = [x]
 dedupList (x:y:xs)
-    | x == y     = x:(dedupList xs)
+    | x == y     = dedupList (x:xs)
     | otherwise  = x:(dedupList (y:xs))
 
 -- Problem 9
