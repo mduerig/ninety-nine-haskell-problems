@@ -1,1 +1,1 @@
-# ninetynine-hackell-problems
+# ninety-nine-haskell-problems
