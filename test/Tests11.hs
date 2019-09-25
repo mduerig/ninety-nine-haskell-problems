@@ -14,6 +14,7 @@ tests11Main = do
     quickCheck dupProp
     quickCheck replProp
     quickCheck dropEveryProp
+    quickCheck splitProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -43,3 +44,7 @@ replProp n xs = n > 0 ==>
 dropEveryProp :: Int -> [Int] -> Property
 dropEveryProp n xs = n > 0 ==>
     concatMap (take (n - 1)) (chunksOf n xs) == dropEvery n xs
+
+splitProp :: Int -> [Int] -> Property
+splitProp n xs = n >= 0 ==>
+    (take n xs, drop n xs) == Problems11.split n xs

@@ -71,3 +71,11 @@ dropEvery n xs = reverse $ fst $ foldl bab ([], 1) xs
     where bab (xs, k) x
             | k `mod` n == 0  = (xs,   k + 1)
             | otherwise       = (x:xs, k + 1)
+
+
+-- Problem 17: Split a list into two parts; the length of the first part is given.
+split :: Int -> [a] -> ([a], [a])
+split 0 xs     = ([], xs)
+split n []     = ([], [])
+split n (x:xs) = (x:ys, zs)
+    where (ys, zs) = split (n - 1) xs
