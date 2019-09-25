@@ -4,11 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e7614ebc3e0e0ec4535371a41aa6d93ca9659a2698ea4a4496be17e68d325e27
+-- hash: 7de374ea9fe5550853d0b9a3ecf4d28454f7471ff1b05075c7169da84c3fd9a1
 
 name:           ninety-nine-haskell-problems
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/ninety-nine-haskell-problems#readme>
+description:    Please see the README on GitHub at <https://github.com/mduerig/ninety-nine-haskell-problems>
 homepage:       https://github.com/mduerig/ninety-nine-haskell-problems#readme
 bug-reports:    https://github.com/mduerig/ninety-nine-haskell-problems/issues
 author:         Author name here
@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       Problems1
+      Problems11
   other-modules:
       Paths_ninety_nine_haskell_problems
   hs-source-dirs:
@@ -52,6 +53,8 @@ test-suite ninety-nine-haskell-problems-test
   type: exitcode-stdio-1.0
   main-is: Tests.hs
   other-modules:
+      Tests1
+      Tests11
       Paths_ninety_nine_haskell_problems
   hs-source-dirs:
       test
