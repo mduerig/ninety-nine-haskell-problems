@@ -2,6 +2,7 @@ module Tests11 where
 
 import Problems11
 import Control.Monad ( liftM, liftM2 )
+import Data.List
 import Test.QuickCheck
 
 tests11Main :: IO ()
@@ -9,6 +10,7 @@ tests11Main = do
     quickCheck rlEncDecProp
     quickCheck rlDecEncProp
     quickCheck encodeDirectProp
+    quickCheck dupProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -24,3 +26,9 @@ rlDecEncProp xs = (rlEnc' $ rlDec' $ rlEnc' $ rlDec' xs) == (rlEnc' $ rlDec' xs)
 
 encodeDirectProp :: [Int] -> Bool
 encodeDirectProp xs = (rlEnc' xs) == (encodeDirect xs)
+
+dupProp :: [Int] -> Bool
+dupProp xs = (second $ dup xs) == xs
+    where
+        second (x:y:xs) = y:(second xs)
+        second _        = []

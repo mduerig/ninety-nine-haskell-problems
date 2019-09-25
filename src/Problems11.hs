@@ -51,3 +51,9 @@ encodeDirect = foldr abb []
         abb x (Tuple y n:ys)
                     | x == y    = (Tuple y (n + 1)):ys
                     | x /= y    = (Single x):(Tuple y n):ys
+
+
+-- Problem 14: Duplicate the elements of a list.
+dup :: [a] -> [a]
+dup = foldr abb []
+    where abb x xs = x:x:xs
