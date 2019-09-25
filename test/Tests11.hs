@@ -8,6 +8,7 @@ tests11Main :: IO ()
 tests11Main = do
     quickCheck rlEncDecProp
     quickCheck rlDecEncProp
+    quickCheck encodeDirectProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -20,3 +21,6 @@ instance Arbitrary a => Arbitrary (Enc a) where
 -- a normal form. E.g. [Single 1,Tuple 1 3] == [Tuple 1 4]
 rlDecEncProp :: [Enc Int] -> Bool
 rlDecEncProp xs = (rlEnc' $ rlDec' $ rlEnc' $ rlDec' xs) == (rlEnc' $ rlDec' xs)
+
+encodeDirectProp :: [Int] -> Bool
+encodeDirectProp xs = (rlEnc' xs) == (encodeDirect xs)
