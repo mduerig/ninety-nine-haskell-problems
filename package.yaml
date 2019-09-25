@@ -2,9 +2,8 @@ name:                ninety-nine-haskell-problems
 version:             0.1.0.0
 github:              "mduerig/ninety-nine-haskell-problems"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2019 Author name here"
+author:              "Michael Dürig"
+copyright:           "2019 Michael Dürig"
 
 extra-source-files:
 - README.md
@@ -21,6 +20,7 @@ description:         Please see the README on GitHub at <https://github.com/mdue
 
 dependencies:
 - base >= 4.7 && < 5
+- split
 
 library:
   source-dirs: src

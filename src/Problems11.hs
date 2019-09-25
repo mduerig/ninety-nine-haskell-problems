@@ -57,3 +57,9 @@ encodeDirect = foldr abb []
 dup :: [a] -> [a]
 dup = foldr abb []
     where abb x xs = x:x:xs
+
+
+-- Problem 15: Replicate the elements of a list a given number of times.
+repl :: Int -> [a] -> [a]
+repl n = foldr abb []
+    where abb x xs = replicate n x ++ xs

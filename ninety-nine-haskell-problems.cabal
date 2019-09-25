@@ -4,16 +4,16 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7de374ea9fe5550853d0b9a3ecf4d28454f7471ff1b05075c7169da84c3fd9a1
+-- hash: 1953ae4fd615059f228203683abd7d82ff8d635494faea1112e218322da2dcb5
 
 name:           ninety-nine-haskell-problems
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/mduerig/ninety-nine-haskell-problems>
 homepage:       https://github.com/mduerig/ninety-nine-haskell-problems#readme
 bug-reports:    https://github.com/mduerig/ninety-nine-haskell-problems/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2019 Author name here
+author:         Michael Dürig
+maintainer:     Michael Dürig
+copyright:      2019 Michael Dürig
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -35,6 +35,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , split
   default-language: Haskell2010
 
 executable ninety-nine-haskell-problems-exe
@@ -47,6 +48,7 @@ executable ninety-nine-haskell-problems-exe
   build-depends:
       base >=4.7 && <5
     , ninety-nine-haskell-problems
+    , split
   default-language: Haskell2010
 
 test-suite ninety-nine-haskell-problems-test
@@ -63,4 +65,5 @@ test-suite ninety-nine-haskell-problems-test
       QuickCheck
     , base >=4.7 && <5
     , ninety-nine-haskell-problems
+    , split
   default-language: Haskell2010

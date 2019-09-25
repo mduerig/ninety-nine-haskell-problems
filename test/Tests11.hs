@@ -3,6 +3,7 @@ module Tests11 where
 import Problems11
 import Control.Monad ( liftM, liftM2 )
 import Data.List
+import Data.List.Split
 import Test.QuickCheck
 
 tests11Main :: IO ()
@@ -11,6 +12,7 @@ tests11Main = do
     quickCheck rlDecEncProp
     quickCheck encodeDirectProp
     quickCheck dupProp
+    quickCheck replProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -32,3 +34,7 @@ dupProp xs = (second $ dup xs) == xs
     where
         second (x:y:xs) = y:(second xs)
         second _        = []
+
+replProp :: Int -> [Int] -> Property
+replProp n xs = n > 0 ==>
+    map head (chunksOf n $ repl n xs) == xs
