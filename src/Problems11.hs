@@ -63,3 +63,11 @@ dup = foldr abb []
 repl :: Int -> [a] -> [a]
 repl n = foldr abb []
     where abb x xs = replicate n x ++ xs
+
+
+-- Problem 16: Drop every N'th element from a list.
+dropEvery :: Int -> [a] -> [a]
+dropEvery n xs = reverse $ fst $ foldl bab ([], 1) xs
+    where bab (xs, k) x
+            | k `mod` n == 0  = (xs,   k + 1)
+            | otherwise       = (x:xs, k + 1)

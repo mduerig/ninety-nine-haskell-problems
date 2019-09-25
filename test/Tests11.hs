@@ -13,6 +13,7 @@ tests11Main = do
     quickCheck encodeDirectProp
     quickCheck dupProp
     quickCheck replProp
+    quickCheck dropEveryProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -38,3 +39,7 @@ dupProp xs = (second $ dup xs) == xs
 replProp :: Int -> [Int] -> Property
 replProp n xs = n > 0 ==>
     map head (chunksOf n $ repl n xs) == xs
+
+dropEveryProp :: Int -> [Int] -> Property
+dropEveryProp n xs = n > 0 ==>
+    concatMap (take (n - 1)) (chunksOf n xs) == dropEvery n xs
