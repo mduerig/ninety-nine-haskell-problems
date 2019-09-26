@@ -16,6 +16,7 @@ tests11Main = do
     quickCheck dropEveryProp
     quickCheck splitProp
     quickCheck sliceProp
+    quickCheck rotateProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -54,3 +55,10 @@ sliceProp :: [Int] -> Property
 sliceProp xs = forAll (choose (1, length xs)) $ \i ->
     forAll (choose (i, length xs)) $ \j ->
        length (slice i j xs) == min (length xs) (j - i + 1)
+
+rotateProp :: [Int] -> Property
+rotateProp xs = forAll (choose (0, length xs)) $ \i ->
+    let
+        j = (length xs) - i
+    in
+        rotate j (rotate i xs) == xs

@@ -87,3 +87,7 @@ split n (x:xs) = (x:ys, zs)
 slice :: Int -> Int -> [a] -> [a]
 slice i j xs = take (j - i + 1) $ drop (i - 1) xs
 
+
+-- Problem 19: Rotate a list N places to the left.
+rotate :: Int -> [a] -> [a]
+rotate n xs = (drop n xs) ++ (take n xs)
