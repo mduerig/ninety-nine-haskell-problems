@@ -91,3 +91,10 @@ slice i j xs = take (j - i + 1) $ drop (i - 1) xs
 -- Problem 19: Rotate a list N places to the left.
 rotate :: Int -> [a] -> [a]
 rotate n xs = (drop n xs) ++ (take n xs)
+
+
+-- Problem 20: Remove the K'th element from a list.
+removeElem :: Int -> [a] -> [a]
+removeElem _ [] = []
+removeElem 1 (x:xs) = xs
+removeElem k (x:xs) = x:(removeElem (k - 1) xs)

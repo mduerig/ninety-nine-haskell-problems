@@ -17,6 +17,7 @@ tests11Main = do
     quickCheck splitProp
     quickCheck sliceProp
     quickCheck rotateProp
+    quickCheck removeElemProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -62,3 +63,8 @@ rotateProp xs = forAll (choose (0, length xs)) $ \i ->
         j = (length xs) - i
     in
         rotate j (rotate i xs) == xs
+
+removeElemProp :: [Int] -> Property
+removeElemProp xs = forAll (choose (1, length xs)) $ \i ->
+    take (i - 1) xs == take (i - 1) (removeElem i xs) &&
+    drop i xs       == drop (i - 1) (removeElem i xs)
