@@ -79,3 +79,11 @@ split 0 xs     = ([], xs)
 split n []     = ([], [])
 split n (x:xs) = (x:ys, zs)
     where (ys, zs) = split (n - 1) xs
+
+-- Problem 18: Extract a slice from a list.
+-- Given two indices, i and k, the slice is the list containing the elements between
+-- the i'th and k'th element of the original list (both limits included).
+-- Start counting the elements with 1.
+slice :: Int -> Int -> [a] -> [a]
+slice i j xs = take (j - i + 1) $ drop (i - 1) xs
+

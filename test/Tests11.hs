@@ -15,6 +15,7 @@ tests11Main = do
     quickCheck replProp
     quickCheck dropEveryProp
     quickCheck splitProp
+    quickCheck sliceProp
 
 rlEncDecProp :: [Int] -> Bool
 rlEncDecProp xs = (rlDec' $ rlEnc' xs) == xs
@@ -48,3 +49,8 @@ dropEveryProp n xs = n > 0 ==>
 splitProp :: Int -> [Int] -> Property
 splitProp n xs = n >= 0 ==>
     (take n xs, drop n xs) == Problems11.split n xs
+
+sliceProp :: [Int] -> Property
+sliceProp xs = forAll (choose (1, length xs)) $ \i ->
+    forAll (choose (i, length xs)) $ \j ->
+       length (slice i j xs) == min (length xs) (j - i + 1)
