@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1953ae4fd615059f228203683abd7d82ff8d635494faea1112e218322da2dcb5
+-- hash: 3b0ff053c4221a807bb173deb6cc8d4015001842cab90e380e66db2466de0adf
 
 name:           ninety-nine-haskell-problems
 version:        0.1.0.0
@@ -29,6 +29,7 @@ library
   exposed-modules:
       Problems1
       Problems11
+      Problems21
   other-modules:
       Paths_ninety_nine_haskell_problems
   hs-source-dirs:
@@ -57,6 +58,7 @@ test-suite ninety-nine-haskell-problems-test
   other-modules:
       Tests1
       Tests11
+      Tests21
       Paths_ninety_nine_haskell_problems
   hs-source-dirs:
       test
