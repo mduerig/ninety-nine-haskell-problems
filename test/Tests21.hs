@@ -11,6 +11,7 @@ tests21Main = do
     quickCheck rangeProp
     quickCheck rndSelectProp
     quickCheck rndDiffProp
+    quickCheck rndPermProp
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -32,7 +33,6 @@ rndSelectProp xs = forAll (choose (0, length xs)) $ \i ->
         assert (all (`elem` xs) rnd)
 
 
---        rndDiff :: Int -> Int -> IO [Int]
 rndDiffProp :: Int -> Property
 rndDiffProp m = forAll (choose (0, m)) $ \n ->
     monadicIO $ do
@@ -40,3 +40,9 @@ rndDiffProp m = forAll (choose (0, m)) $ \n ->
         assert ( all (`elem` [1..m]) rnd
               && all (==1) (map length $ group rnd)
                )
+
+-- rndPerm :: [a] -> IO [a]
+rndPermProp :: [Int] -> Property
+rndPermProp xs = monadicIO $ do
+    perm <- run (rndPerm xs)
+    assert ( sort xs == sort perm )

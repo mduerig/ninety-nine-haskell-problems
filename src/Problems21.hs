@@ -41,3 +41,16 @@ rndDiff n m = do
         abb k (rs, rnd) =
             let (r', rnd') = randomR (1, k) rnd
             in  (insert r' rs, rnd')
+
+
+-- Problem 25: Generate a random permutation of the elements of a list.
+rndPerm :: [a] -> IO [a]
+rndPerm xs = do
+    let len  = length xs
+    ix       <- rndDiff len len
+    return $ get ix xs
+
+    where
+        get :: [Int] -> [a] -> [a]
+        get []     _  = []
+        get (i:ix) xs = (xs!!(i - 1)):(get ix xs)
