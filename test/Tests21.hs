@@ -12,6 +12,7 @@ tests21Main = do
     quickCheck rndSelectProp
     quickCheck rndDiffProp
     quickCheck rndPermProp
+    quickCheck rndCombProp
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -41,8 +42,14 @@ rndDiffProp m = forAll (choose (0, m)) $ \n ->
               && all (==1) (map length $ group rnd)
                )
 
--- rndPerm :: [a] -> IO [a]
 rndPermProp :: [Int] -> Property
 rndPermProp xs = monadicIO $ do
     perm <- run (rndPerm xs)
     assert ( sort xs == sort perm )
+
+-- combinations :: Int -> [a] -> IO [a]
+rndCombProp :: [Int] -> Property
+rndCombProp xs = forAll (choose (0, length xs)) $ \k ->
+    monadicIO $ do
+        comb <- run (rndComb k xs)
+        assert ( (sort comb) `isSubsequenceOf` (sort xs) )

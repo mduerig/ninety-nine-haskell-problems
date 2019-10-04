@@ -45,12 +45,18 @@ rndDiff n m = do
 
 -- Problem 25: Generate a random permutation of the elements of a list.
 rndPerm :: [a] -> IO [a]
-rndPerm xs = do
-    let len  = length xs
-    ix       <- rndDiff len len
+rndPerm xs = rndComb (length xs) xs
+
+
+rndComb :: Int -> [a] -> IO [a]
+rndComb k xs = do
+    ix  <- rndDiff k (length xs)
     return $ get ix xs
 
     where
         get :: [Int] -> [a] -> [a]
         get []     _  = []
         get (i:ix) xs = (xs!!(i - 1)):(get ix xs)
+
+
+-- Problem 26: Generate the combinations of K distinct objects chosen from the N elements of a list
