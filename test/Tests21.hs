@@ -1,6 +1,7 @@
 module Tests21 where
 
 import Problems21
+import Data.List
 import Test.QuickCheck
 import Test.QuickCheck.Monadic
 
@@ -9,6 +10,7 @@ tests21Main = do
     quickCheck insertAtProp
     quickCheck rangeProp
     quickCheck rndSelectProp
+    quickCheck rndDiffProp
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -27,5 +29,14 @@ rndSelectProp :: [Int] -> Property
 rndSelectProp xs = forAll (choose (0, length xs)) $ \i ->
     monadicIO $ do
         rnd <- run (rndSelect i xs)
-        assert (all (\x -> elem x xs) rnd)
+        assert (all (`elem` xs) rnd)
 
+
+--        rndDiff :: Int -> Int -> IO [Int]
+rndDiffProp :: Int -> Property
+rndDiffProp m = forAll (choose (0, m)) $ \n ->
+    monadicIO $ do
+        rnd <- run (rndDiff n m)
+        assert ( all (`elem` [1..m]) rnd
+              && all (==1) (map length $ group rnd)
+               )
