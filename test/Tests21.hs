@@ -13,6 +13,8 @@ tests21Main = do
     quickCheck rndDiffProp
     quickCheck rndPermProp
     quickCheck rndCombProp
+    quickCheck permsProp
+    quickCheck combinationsProp
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -53,3 +55,19 @@ rndCombProp xs = forAll (choose (0, length xs)) $ \k ->
     monadicIO $ do
         comb <- run (rndComb k xs)
         assert ( (sort comb) `isSubsequenceOf` (sort xs) )
+
+permsProp :: Property
+permsProp = forAll (choose (0, 6::Int)) $ \n ->
+    let xs = [0..n]
+    in (sort $ permutations xs) == (sort $ perms xs)
+
+combinationsProp :: Property
+combinationsProp =
+    forAll (choose (0, 6::Int)) $ \n ->
+        forAll (choose (0, n)) $ \k ->
+            let
+                xs    = [0..n]
+                comb1 = combinations k xs
+                comb2 = nub $ map (take k) (perms xs)
+            in
+                (sort comb1) == (sort comb2)

@@ -1,6 +1,8 @@
 module Problems21 where
 
 import System.Random
+import Data.List.HT ( rotate )
+import Control.Monad
 
 -- Problem 21: Insert an element at a given position into a list.
 insertAt :: Int -> a -> [a] -> [a]
@@ -60,3 +62,17 @@ rndComb k xs = do
 
 
 -- Problem 26: Generate the combinations of K distinct objects chosen from the N elements of a list
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _  = [[]]
+combinations _ [] = [[]]
+combinations n xs = (permute n) =<< rotations
+    where
+        permute :: Int -> [a] -> [[a]]
+        permute n (x:xs) = map (x :) (combinations (n - 1) xs)
+
+        len              = length xs
+        rotations        = take len $ iterate (rotate (len - 1)) xs
+
+
+perms :: [a] -> [[a]]
+perms xs = combinations (length xs) xs
