@@ -68,6 +68,6 @@ combinationsProp =
             let
                 xs    = [0..n]
                 comb1 = combinations k xs
-                comb2 = nub $ map (take k) (perms xs)
+                comb2 = nub $ map sort (map (take k) (perms xs))
             in
                 (sort comb1) == (sort comb2)
