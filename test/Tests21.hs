@@ -4,6 +4,7 @@ import Problems21
 import Data.List
 import Test.QuickCheck
 import Test.QuickCheck.Monadic
+import Control.Monad
 
 tests21Main :: IO ()
 tests21Main = do
@@ -15,6 +16,7 @@ tests21Main = do
     quickCheck rndCombProp
     quickCheck permsProp
     quickCheck combinationsProp
+    quickCheck group3Prop
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -71,3 +73,6 @@ combinationsProp =
                 comb2 = nub $ map sort (map (take k) (perms xs))
             in
                 (sort comb1) == (sort comb2)
+
+group3Prop :: Bool
+group3Prop = (join . nub . map (sort . join) $ group3 [1..9]) == [1..9]

@@ -79,3 +79,15 @@ combinations :: Int -> [a] -> [[a]]
 combinations 0 _  = [[]]
 combinations n xs = [ y:ys | y:xs' <- tails xs
                            ,   ys  <- combinations (n - 1) xs' ]
+
+
+-- Problem 27: Group the elements of a set into disjoint subsets.
+-- a) In how many ways can a group of 9 people work in 3 disjoint subgroups of 2, 3 and 4 persons?
+-- Write a function that generates all the possibilities and returns them in a list.
+group3 :: Eq a => [a] -> [[[a]]]
+group3 xs = [ [g2, g3, g4] | g2 <- combinations 2 xs
+                           , g3 <- combinations 3 (xs \\ g2)
+                           , g4 <- combinations 4 ((xs \\ g2) \\ g3) ]
+
+-- b) Generalize the above predicate in a way that we can specify a list of group sizes and
+-- the predicate will return a list of groups.
