@@ -17,6 +17,7 @@ tests21Main = do
     quickCheck permsProp
     quickCheck combinationsProp
     quickCheck group3Prop
+    quickCheck groupNProp
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -76,3 +77,6 @@ combinationsProp =
 
 group3Prop :: Bool
 group3Prop = (join . nub . map (sort . join) $ group3 [1..9]) == [1..9]
+
+groupNProp :: Bool
+groupNProp = (group3 [1..9]) == (groupN [2,3,4] [1..9])

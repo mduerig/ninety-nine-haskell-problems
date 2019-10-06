@@ -91,3 +91,7 @@ group3 xs = [ [g2, g3, g4] | g2 <- combinations 2 xs
 
 -- b) Generalize the above predicate in a way that we can specify a list of group sizes and
 -- the predicate will return a list of groups.
+groupN :: Eq a => [Int] -> [a] -> [[[a]]]
+groupN []     xs = [[]]
+groupN (c:cs) xs = [ g:gs | g   <- combinations c xs
+                          , gs  <- groupN cs (xs \\ g) ]
