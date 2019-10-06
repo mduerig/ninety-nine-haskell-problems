@@ -18,6 +18,8 @@ tests21Main = do
     quickCheck combinationsProp
     quickCheck group3Prop
     quickCheck groupNProp
+    quickCheck lSortProp
+    quickCheck lfSortProp
 
 insertAtProp :: Int -> [Int] -> Property
 insertAtProp x [] = property $ (insertAt 1 x []) == [x]
@@ -80,3 +82,18 @@ group3Prop = (join . nub . map (sort . join) $ group3 [1..9]) == [1..9]
 
 groupNProp :: Bool
 groupNProp = (group3 [1..9]) == (groupN [2,3,4] [1..9])
+
+lSortProp :: [[Int]] -> Bool
+lSortProp xs =
+    let lens = sort $ map length (lSort xs)
+    in  lens == sort lens
+
+
+lfSortProp :: [[Int]] -> Property
+lfSortProp xs =
+    forAll (choose (0, (length xs) - 1)) $ \i ->
+        forAll (choose (i, (length xs) - 1)) $ \j ->
+            (freq $ length (lfSorted!!i)) <= (freq $ length ((lfSort xs)!!j))
+    where
+        lfSorted = lfSort xs
+        freq c = length $ filter (\x -> (length x) == c) xs
