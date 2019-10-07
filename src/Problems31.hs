@@ -7,3 +7,15 @@ isPrime n = n > 1 && all (\d -> (n `mod` d) /= 0) factors
         factors = takeWhile (\m -> m*m <= n) [2..]
 
 
+-- Problem 32: Determine the greatest common divisor of two positive integer numbers.
+-- Use Euclid's algorithm.
+gcd' :: Int -> Int -> Int
+gcd' m n = if m < n
+    then gcd' n m
+    else
+        let
+            r = m `mod` n
+        in
+            if r == 0
+                then n
+                else gcd' n r
