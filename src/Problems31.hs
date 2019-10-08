@@ -45,3 +45,10 @@ primeFactors n = if isPrime n || n == 1
             Just f = find (\m -> n `mod` m == 0) [2..]
         in
             (primeFactors f) ++ (primeFactors (n `div` f))
+
+-- Problem 36: Determine the prime factors of a given positive integer.
+-- Construct a list containing the prime factors and their multiplicity.
+primeFactorCount :: Int -> [(Int, Int)]
+primeFactorCount n =
+    let f = group $ primeFactors n
+    in zip (map head f) (map length f)
