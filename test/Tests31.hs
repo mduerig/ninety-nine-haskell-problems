@@ -12,6 +12,7 @@ tests31Main = do
     quickCheck totientProp
     quickCheck primeFactorsSortedProp
     quickCheck totient'Prop
+    quickCheck primesInRangeProp
 
 isPrimeProp :: Positive Int -> Positive Int -> Property
 isPrimeProp (Positive n) (Positive m) = m > 1 && n > 1 ==>
@@ -37,3 +38,14 @@ primeFactorsProp n = (product $ primeFactors n) == n
 
 totient'Prop :: Positive Int -> Bool
 totient'Prop (Positive n) = totient n == totient' n
+
+
+primesInRangeProp :: Positive Int -> Positive Int -> Property
+primesInRangeProp (Positive p) (Positive q) = p < q ==>
+    let
+        r = primesInRange p q
+    in
+        r == [] || (
+        p <= minimum r &&
+        q >= maximum r &&
+        all isPrime r )

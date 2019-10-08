@@ -68,3 +68,10 @@ totient' :: Int -> Int
 totient' n = product $ map f (primeFactorCount n)
     where
         f (p, m) = (p - 1) * p ^ (m - 1)
+
+
+-- Problem 39: A list of prime numbers.
+-- Given a range of integers by its lower and upper limit, construct a list of all prime
+-- numbers in that range.
+primesInRange :: Int -> Int -> [Int]
+primesInRange p q = filter isPrime [p..q]
