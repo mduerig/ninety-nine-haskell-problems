@@ -11,6 +11,7 @@ tests31Main = do
     quickCheck coPrimeProp
     quickCheck totientProp
     quickCheck primeFactorsSortedProp
+    quickCheck totient'Prop
 
 isPrimeProp :: Positive Int -> Positive Int -> Property
 isPrimeProp (Positive n) (Positive m) = m > 1 && n > 1 ==>
@@ -33,3 +34,6 @@ primeFactorsSortedProp (Positive n) =
 
 primeFactorsProp :: Int -> Bool
 primeFactorsProp n = (product $ primeFactors n) == n
+
+totient'Prop :: Positive Int -> Bool
+totient'Prop (Positive n) = totient n == totient' n
