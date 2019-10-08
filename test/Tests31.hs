@@ -13,6 +13,7 @@ tests31Main = do
     quickCheck primeFactorsSortedProp
     quickCheck totient'Prop
     quickCheck primesInRangeProp
+    quickCheck goldbachProp
 
 isPrimeProp :: Positive Int -> Positive Int -> Property
 isPrimeProp (Positive n) (Positive m) = m > 1 && n > 1 ==>
@@ -49,3 +50,12 @@ primesInRangeProp (Positive p) (Positive q) = p < q ==>
         p <= minimum r &&
         q >= maximum r &&
         all isPrime r )
+
+goldbachProp :: Int -> Property
+goldbachProp n = n > 2 && n `mod` 2 == 0 ==>
+    let
+        (p, q) = goldbach n
+    in
+        isPrime p &&
+        isPrime q &&
+        p + q == n
