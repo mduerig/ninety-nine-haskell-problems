@@ -19,3 +19,9 @@ gcd' m n = if m < n
             if r == 0
                 then n
                 else gcd' n r
+
+-- Problem 33: Determine whether two positive integer numbers are coprime. Two numbers
+-- are coprime if their greatest common divisor equals 1.
+coPrime :: Int -> Int -> Bool
+coPrime m n = gcd' m n == 1
+
