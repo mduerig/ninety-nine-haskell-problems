@@ -2,6 +2,7 @@ module Tests31 where
 
 import Test.QuickCheck
 import Problems31
+import Data.List
 
 tests31Main :: IO ()
 tests31Main = do
@@ -9,6 +10,7 @@ tests31Main = do
     quickCheck gcd'Prop
     quickCheck coPrimeProp
     quickCheck totientProp
+    quickCheck primeFactorsSortedProp
 
 isPrimeProp :: Positive Int -> Positive Int -> Property
 isPrimeProp (Positive n) (Positive m) = m > 1 && n > 1 ==>
@@ -23,3 +25,11 @@ coPrimeProp (Positive m) (Positive n) = (gcd m n == 1) == coPrime m n
 totientProp :: Int -> Property
 totientProp n = isPrime n ==>
     totient n == n -1
+
+primeFactorsSortedProp :: Positive Int -> Bool
+primeFactorsSortedProp (Positive n) =
+    let f = primeFactors n
+    in f == (sort f)
+
+primeFactorsProp :: Int -> Bool
+primeFactorsProp n = (product $ primeFactors n) == n

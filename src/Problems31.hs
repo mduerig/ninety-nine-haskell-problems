@@ -1,5 +1,7 @@
 module Problems31 where
 
+import Data.List
+
 -- Problem 31: Determine whether a given integer number is prime.
 isPrime :: Int -> Bool
 isPrime n = n > 1 && all (\d -> (n `mod` d) /= 0) factors
@@ -31,3 +33,15 @@ coPrime m n = gcd' m n == 1
 -- integers r (1 <= r < m) that are coprime to m.
 totient :: Int -> Int
 totient n = length $ filter (coPrime n) [1..n-1]
+
+
+-- Problem 35: Determine the prime factors of a given positive integer.
+-- Construct a flat list containing the prime factors in ascending order.
+primeFactors :: Int -> [Int]
+primeFactors n = if isPrime n || n == 1
+    then [n]
+    else
+        let
+            Just f = find (\m -> n `mod` m == 0) [2..]
+        in
+            (primeFactors f) ++ (primeFactors (n `div` f))
