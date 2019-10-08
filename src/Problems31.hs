@@ -25,3 +25,9 @@ gcd' m n = if m < n
 coPrime :: Int -> Int -> Bool
 coPrime m n = gcd' m n == 1
 
+
+-- Problem 34: Calculate Euler's totient function phi(m).
+-- Euler's so-called totient function phi(m) is defined as the number of positive
+-- integers r (1 <= r < m) that are coprime to m.
+totient :: Int -> Int
+totient n = length $ filter (coPrime n) [1..n-1]

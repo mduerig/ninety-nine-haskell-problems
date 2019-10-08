@@ -8,6 +8,7 @@ tests31Main = do
     quickCheck isPrimeProp
     quickCheck gcd'Prop
     quickCheck coPrimeProp
+    quickCheck totientProp
 
 isPrimeProp :: Positive Int -> Positive Int -> Property
 isPrimeProp (Positive n) (Positive m) = m > 1 && n > 1 ==>
@@ -18,3 +19,7 @@ gcd'Prop (Positive m) (Positive n) = gcd m n == gcd' m n
 
 coPrimeProp :: Positive Int -> Positive Int -> Bool
 coPrimeProp (Positive m) (Positive n) = (gcd m n == 1) == coPrime m n
+
+totientProp :: Int -> Property
+totientProp n = isPrime n ==>
+    totient n == n -1
