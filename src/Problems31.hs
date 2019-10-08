@@ -94,3 +94,9 @@ goldbach n =
         (Just m) = find (\m -> isPrime (n - m)) (takeWhile (< n) primes)
     in
         (m, n - m)
+
+
+-- Problem 41: Given a range of integers by its lower and upper limit, print a list of all even
+-- numbers and their Goldbach composition.
+goldList :: Int -> Int -> [(Int, Int)]
+goldList m n = map goldbach $ filter even [m..n]
