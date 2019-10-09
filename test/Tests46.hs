@@ -13,6 +13,7 @@ tests46Main = do
     quickCheck norProp
     quickCheck equXorProp
     quickCheck implProp
+    quickCheck infixProp
 
 andProp :: Bool -> Bool
 andProp x = and x True  == x
@@ -41,3 +42,6 @@ equXorProp x y = equ x y == not (xor x y)
 
 implProp :: Bool -> Bool -> Bool
 implProp x y = impl x y == or (not x) y
+
+infixProp :: Bool -> Bool -> Bool -> Bool
+infixProp x y z = (x `or` y `and` z) == or x (and y z)
