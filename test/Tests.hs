@@ -2,6 +2,7 @@ import Tests1
 import Tests11
 import Tests21
 import Tests31
+import Tests46
 
 main :: IO ()
 main = do
@@ -9,3 +10,4 @@ main = do
     tests11Main
     tests21Main
     tests31Main
+    tests46Main
