@@ -95,3 +95,61 @@ gray n =
         split = splitAt (length codes `div` 2) codes
     in
         fst split ++ reverse (snd split)
+
+
+-- Problem 50: Huffman codes.
+-- We suppose a set of symbols with their frequencies, given as a list of fr(S,F) terms.
+-- Example:
+--
+--    [fr(a,45),fr(b,13),fr(c,12),fr(d,16),fr(e,9),fr(f,5)].
+--
+-- Our objective is to construct a list hc(S,C) terms, where C is the Huffman code word
+-- for the symbol S. In our example, the result could be
+--
+--    Hs = [hc(a,'0'), hc(b,'101'), hc(c,'100'), hc(d,'111'), hc(e,'1101'), hc(f,'1100')]
+--         [hc(a,'01'),...etc.].
+--
+-- Example in Haskell:
+--
+--     λ> huffman [('a',45),('b',13),('c',12),('d',16),('e',9),('f',5)]
+--     [('a',"0"),('b',"101"),('c',"100"),('d',"111"),('e',"1101"),('f',"1100")]
+huffman :: [(Char, Int)] -> [(Char, String)]
+huffman fs =
+    let
+        leaves :: [Heap]
+        leaves = sort $ map leaf fs
+
+        reduce :: [Heap] -> [Heap]
+        reduce (h1:h2:hs) = sort $ (branch h1 h2):hs
+
+        reduceRec :: [Heap] -> [Heap]
+        reduceRec [h] = [h]
+        reduceRec hs = reduceRec . reduce $ hs
+
+        hTree :: Heap
+        hTree = head $ reduceRec leaves
+
+        traverseTree :: Heap -> String -> [(Char, String)]
+        traverseTree (Leaf c w) s = [(c, s)]
+        traverseTree (Branch _ l r) s =
+            traverseTree l (s ++ "0") ++
+            traverseTree r (s ++ "1")
+    in
+        traverseTree hTree ""
+
+data Heap = Leaf Char Int
+          | Branch Int Heap Heap
+    deriving (Eq, Show)
+
+instance Ord Heap where
+    compare h1 h2 = compare (weight h1) (weight h2)
+
+weight :: Heap -> Int
+weight (Leaf _ w) = w
+weight (Branch w _ _) = w
+
+leaf :: (Char, Int) -> Heap
+leaf (c, w) = Leaf c w
+
+branch :: Heap -> Heap -> Heap
+branch l r = Branch (weight l + weight r) l r
