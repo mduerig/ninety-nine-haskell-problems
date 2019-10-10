@@ -2,7 +2,7 @@ module Tests46 where
 
 import Test.QuickCheck
 import Problems46
-import Prelude(Bool(True, False), IO, (&&), (==))
+import Prelude hiding (not, or, and)
 
 tests46Main :: IO ()
 tests46Main = do

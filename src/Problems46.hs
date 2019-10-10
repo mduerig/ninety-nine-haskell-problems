@@ -1,7 +1,8 @@
 module Problems46 where
 
-import Prelude ( Bool(False, True), IO, putStrLn, show, ($), unlines)
-import Data.List ((++))
+import Prelude hiding (not, or, and)
+import Data.List hiding (or, and)
+import Control.Monad
 
 -- Problem 46: Define predicates and/2, or/2, nand/2, nor/2, xor/2, impl/2 and equ/2
 -- (for logical equivalence) which succeed or fail according to the result of their
@@ -61,4 +62,20 @@ table f =
 -- Define operator precedence as usual; i.e. as in Java.
 infixl 4 `or`
 infixl 6 `and`
+
+
+-- Problem 48: Truth tables for logical expressions (3).
+-- Generalize problem P47 in such a way that the logical expression may contain any number
+-- of logical variables. Define table/2 in a way that table(List,Expr) prints the truth
+-- table for the expression Expr, which contains the logical variables enumerated in List.
+tableLen :: Int -> ([Bool] -> Bool) -> IO()
+tableLen n f = putStrLn . unlines $ map toString (truthValues n)
+    where
+        toString :: [Bool] -> String
+        toString bs = concatMap (\b -> show b ++ " ") bs ++ show (f bs)
+
+        truthValues :: Int -> [[Bool]]
+        truthValues n = replicateM n [False, True]
+        -- truthValues 0 = [[]]
+        -- truthValues n = [ q ++ [w] | q <- truthValues (n - 1), w <- [False, True] ]
 
