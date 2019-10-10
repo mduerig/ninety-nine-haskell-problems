@@ -79,3 +79,19 @@ tableLen n f = putStrLn . unlines $ map toString (truthValues n)
         -- truthValues 0 = [[]]
         -- truthValues n = [ q ++ [w] | q <- truthValues (n - 1), w <- [False, True] ]
 
+
+-- Problem 49: Gray codes.
+-- An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules.
+-- For example,
+--
+--    n = 1: C(1) = ['0','1'].
+--    n = 2: C(2) = ['00','01','11','10'].
+--    n = 3: C(3) = ['000','001','011','010',´110´,´111´,´101´,´100´].
+gray :: Int -> [String]
+gray 0 = [[]]
+gray n =
+    let
+        codes = [ g:gs | g <- ['0', '1'], gs <- gray (n - 1) ]
+        split = splitAt (length codes `div` 2) codes
+    in
+        fst split ++ reverse (snd split)

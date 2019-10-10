@@ -3,6 +3,7 @@ module Tests46 where
 import Test.QuickCheck
 import Problems46
 import Prelude hiding (not, or, and)
+import Data.List hiding (or, and)
 
 tests46Main :: IO ()
 tests46Main = do
@@ -14,6 +15,7 @@ tests46Main = do
     quickCheck equXorProp
     quickCheck implProp
     quickCheck infixProp
+    quickCheck grayProp
 
 andProp :: Bool -> Bool
 andProp x = and x True  == x
@@ -45,3 +47,13 @@ implProp x y = impl x y == or (not x) y
 
 infixProp :: Bool -> Bool -> Bool -> Bool
 infixProp x y z = (x `or` y `and` z) == or x (and y z)
+
+grayProp :: Positive Int -> Property
+grayProp (Positive n) = n <= 12 ==>
+    snd $ foldr abb ("", True) (gray n)
+        where
+            abb g (_, False) = (g, False)
+            abb g ("", _)    = (g, True)
+            abb g (g', True) = (g, singleDiff g g')
+
+            singleDiff g g' = 1 == (length $ g \\ g')
