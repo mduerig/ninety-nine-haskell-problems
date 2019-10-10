@@ -7,6 +7,7 @@ tests55Main :: IO()
 tests55Main = do
     quickCheck balTreeNodeCountProp
     quickCheck balTreeProp
+    quickCheck mirrorProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
@@ -24,3 +25,11 @@ balTreeProp (Positive n) =
             balanced r
     in
         balanced tree
+
+
+mirrorProp :: Positive Int -> Bool
+mirrorProp (Positive n) =
+    let
+        tree = balTree n
+    in
+        tree == (mirror . mirror $ tree)
