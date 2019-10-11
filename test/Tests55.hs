@@ -13,6 +13,7 @@ tests55Main = do
     quickCheck foldableProp
     quickCheck symBalTreeProp
     quickCheck highBalTreeProp
+    quickCheck collectLeavesProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
@@ -56,3 +57,10 @@ highBalTreeProp x (Positive n) = n < 6 ==>
     in
         all balanced trees &&
         all (\t -> height t == n) trees
+
+collectLeavesProp :: [Int] -> Bool
+collectLeavesProp xs =
+    let
+        tree = binTree xs
+    in
+        length (collectLeaves tree) == countLeaves tree

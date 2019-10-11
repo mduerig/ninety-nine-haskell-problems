@@ -94,3 +94,19 @@ highBalTree :: a -> Int -> [Tree a]
 highBalTree x 0 = [ Empty ]
 highBalTree x 1 = [ Branch x Empty (leaf x), Branch x (leaf x) Empty ]
 highBalTree x n = [ Branch x l r | l <- highBalTree x (n - 1), r <- highBalTree x (n - 1) ]
+
+
+-- Problem 61: Count the leaves of a binary tree
+-- A leaf is a node with no successors. Write a predicate count_leaves/2 to count them.
+countLeaves :: Tree a -> Int
+countLeaves Empty = 0
+countLeaves (Branch _ Empty Empty) = 1
+countLeaves (Branch _ l r) = countLeaves l + countLeaves r
+
+-- Problem 61A: Collect the leaves of a binary tree in a list
+-- A leaf is a node with no successors. Write a predicate leaves/2 to collect
+-- them in a list.
+collectLeaves :: Tree a -> [Tree a]
+collectLeaves Empty = []
+collectLeaves t@(Branch _ Empty Empty) = [t]
+collectLeaves (Branch _ l r) = collectLeaves l ++ collectLeaves r
