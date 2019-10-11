@@ -38,3 +38,25 @@ symmetric (Branch _ l r) = l == mirror r
 mirror :: Tree a -> Tree a
 mirror Empty = Empty
 mirror (Branch x l r) = Branch x (mirror r) (mirror l)
+
+
+-- Problem 57: Binary search trees (dictionaries)
+-- Use the predicate add/3, developed in chapter 4 of the course, to write a predicate to
+-- construct a binary search tree from a list of integer numbers.
+binTree :: [Int] -> Tree Int
+binTree []     = Empty
+binTree (n:ns) = insertNode n (binTree ns)
+    where
+        insertNode :: Int -> Tree Int -> Tree Int
+        insertNode n Empty = leaf n
+        insertNode n (Branch m l r)
+                          | n < m     = Branch m (insertNode n l) r
+                          | otherwise = Branch m l (insertNode n r)
+
+instance Foldable Tree where
+    foldMap f Empty = mempty
+    foldMap f (Branch x l r) = (foldMap f l) `mappend` (f x) `mappend` (foldMap f r)
+
+preOrderNodes :: Tree a -> [a]
+preOrderNodes Empty = []
+preOrderNodes (Branch x l r) = (preOrderNodes l) ++ (x:(preOrderNodes r))
