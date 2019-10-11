@@ -12,6 +12,7 @@ tests55Main = do
     quickCheck binTreeProp
     quickCheck foldableProp
     quickCheck symBalTreeProp
+    quickCheck highBalTreeProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
@@ -47,3 +48,11 @@ symBalTreeProp (Positive n) =
         tree = symBalTree n
     in
         symmetric tree && balanced tree
+
+highBalTreeProp :: Int -> Positive Int -> Property
+highBalTreeProp x (Positive n) = n < 6 ==>
+    let
+        trees = highBalTree x n
+    in
+        all balanced trees &&
+        all (\t -> height t == n) trees

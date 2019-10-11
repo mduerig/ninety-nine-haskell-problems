@@ -78,3 +78,19 @@ symBalTree 0 = Empty
 symBalTree n = (Branch "x" t (mirror t))
     where
         t = balTree ((n - 1) `div` 2)
+
+height :: Tree a -> Int
+height Empty = 0
+height (Branch _ Empty Empty) = 0
+height (Branch _ l r) = 1 + max (height l) (height r)
+
+-- Problem 59: Construct height-balanced binary trees
+-- In a height-balanced binary tree, the following property holds for every node:
+-- The height of its left subtree and the height of its right subtree are almost equal,
+-- which means their difference is not greater than one.
+-- Construct a list of all height-balanced binary trees with the given element and the
+-- given maximum height.
+highBalTree :: a -> Int -> [Tree a]
+highBalTree x 0 = [ Empty ]
+highBalTree x 1 = [ Branch x Empty (leaf x), Branch x (leaf x) Empty ]
+highBalTree x n = [ Branch x l r | l <- highBalTree x (n - 1), r <- highBalTree x (n - 1) ]
