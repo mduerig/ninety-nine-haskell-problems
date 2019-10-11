@@ -14,6 +14,8 @@ tests55Main = do
     quickCheck symBalTreeProp
     quickCheck highBalTreeProp
     quickCheck collectLeavesProp
+    quickCheck collectBranchesProp
+    quickCheck collectAtLevelProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
@@ -64,3 +66,17 @@ collectLeavesProp xs =
         tree = binTree xs
     in
         length (collectLeaves tree) == countLeaves tree
+
+collectBranchesProp :: [Int] -> Bool
+collectBranchesProp xs =
+    let
+        tree = binTree xs
+    in
+       length (collectBranches tree) + length (collectLeaves tree) == length xs
+
+collectAtLevelProp :: [Int] -> Property
+collectAtLevelProp xs = xs /= [] ==>
+    let
+        tree = binTree xs
+    in
+        (sum $ (map (\d -> length $ collectAtLevel (d + 1) tree) [0..height tree])) == length xs

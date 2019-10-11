@@ -99,14 +99,35 @@ highBalTree x n = [ Branch x l r | l <- highBalTree x (n - 1), r <- highBalTree 
 -- Problem 61: Count the leaves of a binary tree
 -- A leaf is a node with no successors. Write a predicate count_leaves/2 to count them.
 countLeaves :: Tree a -> Int
-countLeaves Empty = 0
+countLeaves Empty                  = 0
 countLeaves (Branch _ Empty Empty) = 1
-countLeaves (Branch _ l r) = countLeaves l + countLeaves r
+countLeaves (Branch _ l r)         = countLeaves l + countLeaves r
 
 -- Problem 61A: Collect the leaves of a binary tree in a list
 -- A leaf is a node with no successors. Write a predicate leaves/2 to collect
 -- them in a list.
 collectLeaves :: Tree a -> [Tree a]
-collectLeaves Empty = []
+collectLeaves Empty                    = []
 collectLeaves t@(Branch _ Empty Empty) = [t]
-collectLeaves (Branch _ l r) = collectLeaves l ++ collectLeaves r
+collectLeaves (Branch _ l r)           = collectLeaves l ++ collectLeaves r
+
+
+-- Problem 62: Collect the internal nodes of a binary tree in a list
+-- An internal node of a binary tree has either one or two non-empty successors.
+-- Write a predicate internals/2 to collect them in a list.
+collectBranches :: Tree a -> [Tree a]
+collectBranches Empty                  = []
+collectBranches (Branch _ Empty Empty) = []
+collectBranches t@(Branch _ l r)       = t : collectBranches l ++ collectBranches r
+
+
+-- Problem 62B: Collect the nodes at a given level in a list
+-- A node of a binary tree is at level N if the path from the root to the node has
+-- length N-1. The root node is at level 1. Write a predicate atlevel/3 to collect all
+-- nodes at a given level in a list.
+collectAtLevel :: Int -> Tree a -> [Tree a]
+collectAtLevel n t = collect 1 t
+    where
+        collect _ Empty          = []
+        collect d t | d == n     = [t]
+        collect d (Branch _ l r) = (collect (d + 1) l) ++ (collect (d + 1) r)
