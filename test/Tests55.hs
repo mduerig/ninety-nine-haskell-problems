@@ -11,24 +11,13 @@ tests55Main = do
     quickCheck mirrorProp
     quickCheck binTreeProp
     quickCheck foldableProp
+    quickCheck symBalTreeProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
 
 balTreeProp :: Positive Int -> Bool
-balTreeProp (Positive n) =
-    let
-        tree = balTree n
-
-        balanced :: Tree a -> Bool
-        balanced Empty = True
-        balanced (Branch _ l r) =
-            (abs ((countNodes l) - (countNodes r)) <= 1) &&
-            balanced l &&
-            balanced r
-    in
-        balanced tree
-
+balTreeProp (Positive n) = balanced (balTree n)
 
 mirrorProp :: Positive Int -> Bool
 mirrorProp (Positive n) =
@@ -51,3 +40,10 @@ foldableProp xs =
         tree = binTree xs
     in
         foldr (:) [] tree == sort xs
+
+symBalTreeProp :: Positive Int -> Bool
+symBalTreeProp (Positive n) =
+    let
+        tree = symBalTree n
+    in
+        symmetric tree && balanced tree

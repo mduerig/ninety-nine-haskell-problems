@@ -35,6 +35,14 @@ symmetric :: Eq a => Tree a -> Bool
 symmetric Empty = True
 symmetric (Branch _ l r) = l == mirror r
 
+balanced :: Tree a -> Bool
+balanced Empty = True
+balanced (Branch _ l r) =
+    (abs ((countNodes l) - (countNodes r)) <= 1) &&
+    balanced l &&
+    balanced r
+
+
 mirror :: Tree a -> Tree a
 mirror Empty = Empty
 mirror (Branch x l r) = Branch x (mirror r) (mirror l)
@@ -60,3 +68,13 @@ instance Foldable Tree where
 preOrderNodes :: Tree a -> [a]
 preOrderNodes Empty = []
 preOrderNodes (Branch x l r) = (preOrderNodes l) ++ (x:(preOrderNodes r))
+
+
+-- Problem 58: Generate-and-test paradigm
+-- Apply the generate-and-test paradigm to construct all symmetric, completely balanced
+-- binary trees with a given number of nodes.
+symBalTree :: Int -> Tree String
+symBalTree 0 = Empty
+symBalTree n = (Branch "x" t (mirror t))
+    where
+        t = balTree ((n - 1) `div` 2)
