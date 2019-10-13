@@ -16,6 +16,7 @@ tests55Main = do
     quickCheck collectLeavesProp
     quickCheck collectBranchesProp
     quickCheck collectAtLevelProp
+    quickCheck completeBinTreeProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
@@ -80,3 +81,10 @@ collectAtLevelProp xs = xs /= [] ==>
         tree = binTree xs
     in
         (sum $ (map (\d -> length $ collectAtLevel (d + 1) tree) [0..height tree])) == length xs
+
+completeBinTreeProp :: Positive Int -> Bool
+completeBinTreeProp (Positive n) =
+    let
+        tree = completeBinTree n
+    in
+        countNodes tree == n

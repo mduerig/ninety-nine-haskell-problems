@@ -131,3 +131,32 @@ collectAtLevel n t = collect 1 t
         collect _ Empty          = []
         collect d t | d == n     = [t]
         collect d (Branch _ l r) = (collect (d + 1) l) ++ (collect (d + 1) r)
+
+left :: Tree a -> Tree a
+left Empty = Empty
+left (Branch _ l _) = l
+
+right :: Tree a -> Tree a
+right Empty = Empty
+right (Branch _ _ r) = r
+
+-- Problem 63: Construct a complete binary tree
+-- A complete binary tree with height H is defined as follows:
+-- The levels 1,2,3,...,H-1 contain the maximum number of nodes (i.e 2**(i-1) at the level i)
+-- In level H, which may contain less than the maximum possible number of nodes, all the nodes
+-- are "left-adjusted". This means that in a levelorder tree traversal all internal nodes come
+-- first, the leaves come second, and empty successors (the nil's which are not really nodes!)
+-- come last.
+-- Particularly, complete binary trees are used as data structures (or addressing schemes) for
+-- heaps. We can assign an address number to each node in a complete binary tree by enumerating
+-- the nodes in level-order, starting at the root with number 1. For every node X with address A
+-- the following property holds: The address of X's left and right successors are 2*A and 2*A+1,
+-- respectively, if they exist. This fact can be used to elegantly construct a complete binary
+-- tree structure.
+-- Write a predicate complete_binary_tree/2.
+completeBinTree :: Int -> Tree String
+completeBinTree n = createNode 1
+    where
+        createNode k
+            | k > n     = Empty
+            | otherwise = Branch "x" (createNode (k * 2)) (createNode (k * 2 + 1))
