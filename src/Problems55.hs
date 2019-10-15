@@ -160,3 +160,29 @@ completeBinTree n = createNode 1
         createNode k
             | k > n     = Empty
             | otherwise = Branch "x" (createNode (k * 2)) (createNode (k * 2 + 1))
+
+
+-- Problem 64
+-- Given a binary tree as the usual Prolog term t(X,L,R) (or nil). As a preparation for drawing
+-- the tree, a layout algorithm is required to determine the position of each node in a rectangular
+-- grid. Several layout methods are conceivable, one of them is shown in the illustration below:
+-- In this layout strategy, the position of a node v is obtained by the following two rules:
+--     x(v) is equal to the position of the node v in the inorder sequence
+--     y(v) is equal to the depth of the node v in the tree
+-- Write a function to annotate each node of the tree with a position, where (1,1) in the top left
+-- corner or the rectangle bounding the drawn tree.
+data Weighted a = Weighted Int a
+    deriving Show
+
+layout64 :: Tree a -> Tree (a, (Int, Int))
+layout64 t = t'
+    where
+        (Weighted _ t') = layout 1 1 t
+
+        layout :: Int -> Int -> Tree a -> Weighted (Tree (a, (Int, Int)))
+        layout _ _ Empty = Weighted 0 Empty
+        layout x y (Branch k l r) = Weighted (wl + 1 + wr) (Branch (k, (x + wl, y)) l' r')
+            where
+                (Weighted wl l') = layout x (y + 1) l
+                (Weighted wr r') = layout (x + wl + 1) (y + 1) r
+

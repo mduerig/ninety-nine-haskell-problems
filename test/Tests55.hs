@@ -17,6 +17,8 @@ tests55Main = do
     quickCheck collectBranchesProp
     quickCheck collectAtLevelProp
     quickCheck completeBinTreeProp
+    quickCheck layout64XProp
+    quickCheck layout64YProp
 
 balTreeNodeCountProp :: Positive Int -> Bool
 balTreeNodeCountProp (Positive n) = countNodes (balTree n) == n
@@ -88,3 +90,20 @@ completeBinTreeProp (Positive n) =
         tree = completeBinTree n
     in
         countNodes tree == n
+
+layout64XProp :: Positive Int -> Bool
+layout64XProp (Positive n) =
+    let
+        tree = completeBinTree n
+    in
+        map (fst . snd) (preOrderNodes $ layout64 tree) == [1..n]
+
+layout64YProp :: Positive Int -> Property
+layout64YProp (Positive n) =
+    let
+        tree = completeBinTree n
+        getY (Branch (_, (_, y)) _ _) = y
+    in
+        forAll (choose (1, 1 + (height tree))) $ \l ->
+            all (== l) (map getY (collectAtLevel l $ layout64 tree))
+
